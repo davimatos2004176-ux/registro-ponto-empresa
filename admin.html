@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Sistema de Ponto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar admin">
+            <div class="sidebar-header">
+                <h2>⚙️ Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span>📊</span> Visão Geral
+                </a>
+                <a href="#" class="nav-item" data-section="funcionarios">
+                    <span>👥</span> Funcionários
+                </a>
+                <a href="#" class="nav-item" data-section="registros">
+                    <span>📋</span> Registros
+                </a>
+                <a href="#" class="nav-item" data-section="folhas">
+                    <span>💰</span> Folhas de Pagamento
+                </a>
+                <a href="#" class="nav-item" data-section="relatorios">
+                    <span>📈</span> Relatórios
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">🚪 Sair</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Visão Geral</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span>Administrador</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content">
+                <!-- Overview Section -->
+                <section id="overview" class="section active">
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <div class="card-icon">👥</div>
+                            <h3>Total de Funcionários</h3>
+                            <p id="totalFuncionarios" class="card-value">0</p>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">✅</div>
+                            <h3>Presentes Hoje</h3>
+                            <p id="presentesToday" class="card-value">0</p>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">⏰</div>
+                            <h3>Horas Médias (Mês)</h3>
+                            <p id="horasMedia" class="card-value">0h</p>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">💰</div>
+                            <h3>Folha Total (Mês)</h3>
+                            <p id="folhaTotal" class="card-value">R$ 0,00</p>
+                        </div>
+                    </div>
+
+                    <div class="overview-charts">
+                        <div class="chart-card">
+                            <h3>Presença por Dia</h3>
+                            <canvas id="presencaChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Horas por Funcionário (Top 5)</h3>
+                            <canvas id="horasTopChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Funcionários Section -->
+                <section id="funcionarios" class="section">
+                    <div class="section-header">
+                        <h2>Gerenciar Funcionários</h2>
+                        <button class="btn btn-primary" id="btnNovoFuncionario">➕ Novo Funcionário</button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="funcionarios-table">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Salário Base</th>
+                                    <th>Ativo</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="funcionariosTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center">Carregando funcionários...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Registros Section -->
+                <section id="registros" class="section">
+                    <div class="section-header">
+                        <h2>Registros de Ponto</h2>
+                        <div class="filters">
+                            <input 
+                                type="date" 
+                                id="dataFilter" 
+                                class="filter-input"
+                                placeholder="Filtrar por data"
+                            >
+                            <select id="funcionarioFilter" class="filter-input">
+                                <option value="">Todos os Funcionários</option>
+                            </select>
+                            <button class="btn btn-secondary" id="btnFiltrar">🔍 Filtrar</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="registros-table">
+                            <thead>
+                                <tr>
+                                    <th>Funcionário</th>
+                                    <th>Data</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Horas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrosTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center">Carregando registros...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Folhas de Pagamento Section -->
+                <section id="folhas" class="section">
+                    <div class="section-header">
+                        <h2>Folhas de Pagamento</h2>
+                        <div class="filters">
+                            <select id="mesFilter" class="filter-input">
+                                <option value="">Mês Atual</option>
+                                <option value="01/2026">Janeiro/2026</option>
+                                <option value="02/2026">Fevereiro/2026</option>
+                                <option value="03/2026">Março/2026</option>
+                                <option value="04/2026">Abril/2026</option>
+                                <option value="05/2026">Maio/2026</option>
+                                <option value="06/2026">Junho/2026</option>
+                            </select>
+                            <button class="btn btn-success" id="btnGerarFolha">📄 Gerar Folha</button>
+                            <button class="btn btn-primary" id="btnExportarFolha">📥 Exportar</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="folhas-table">
+                            <thead>
+                                <tr>
+                                    <th>Funcionário</th>
+                                    <th>Mês</th>
+                                    <th>Horas</th>
+                                    <th>Salário Base</th>
+                                    <th>Extras</th>
+                                    <th>Descontos</th>
+                                    <th>Líquido</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="folhasTableBody">
+                                <tr>
+                                    <td colspan="8" class="text-center">Carregando folhas...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Relatórios Section -->
+                <section id="relatorios" class="section">
+                    <div class="section-header">
+                        <h2>Relatórios</h2>
+                    </div>
+
+                    <div class="relatorios-grid">
+                        <div class="relatorio-card">
+                            <h3>Relatório de Frequência</h3>
+                            <p>Análise de presença e faltas dos funcionários</p>
+                            <button class="btn btn-primary">📊 Gerar</button>
+                        </div>
+                        <div class="relatorio-card">
+                            <h3>Relatório de Horas Extras</h3>
+                            <p>Horas extras trabalhadas por funcionário</p>
+                            <button class="btn btn-primary">📊 Gerar</button>
+                        </div>
+                        <div class="relatorio-card">
+                            <h3>Relatório de Folha de Pagamento</h3>
+                            <p>Resumo de todos os pagamentos do mês</p>
+                            <button class="btn btn-primary">📊 Gerar</button>
+                        </div>
+                        <div class="relatorio-card">
+                            <h3>Relatório de Custos</h3>
+                            <p>Análise de custos com recursos humanos</p>
+                            <button class="btn btn-primary">📊 Gerar</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Novo Funcionário -->
+    <div id="novoFuncionarioModal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('novoFuncionarioModal')">&times;</span>
+            <h2>Novo Funcionário</h2>
+            <form id="novoFuncionarioForm">
+                <div class="form-group">
+                    <label for="novaMatricula">Matrícula:</label>
+                    <input type="text" id="novaMatricula" required>
+                </div>
+                <div class="form-group">
+                    <label for="novoNome">Nome Completo:</label>
+                    <input type="text" id="novoNome" required>
+                </div>
+                <div class="form-group">
+                    <label for="novoEmail">Email:</label>
+                    <input type="email" id="novoEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="novoSalario">Salário Base:</label>
+                    <input type="number" id="novoSalario" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-success">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>✅ Sucesso!</h2>
+            <p id="successMessage">Operação realizada com sucesso.</p>
+            <button class="btn btn-primary" onclick="closeModal('successModal')">Ok</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
