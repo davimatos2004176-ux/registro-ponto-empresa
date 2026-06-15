@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Registro de Ponto - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>📊 Registro de Ponto</h1>
+                <p>Sistema de Controle de Horas</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="matricula">Matrícula:</label>
+                    <input 
+                        type="text" 
+                        id="matricula" 
+                        name="matricula" 
+                        placeholder="Digite sua matrícula"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        name="senha" 
+                        placeholder="Digite sua senha"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-login">Acessar Sistema</button>
+            </form>
+
+            <div class="login-footer">
+                <p><a href="#">Esqueceu sua senha?</a></p>
+                <p>Primeiro acesso? <a href="#">Cadastre-se aqui</a></p>
+            </div>
+
+            <div class="admin-access">
+                <a href="admin.html" class="btn-admin">Acesso Administrativo</a>
+            </div>
+        </div>
+
+        <div class="login-info">
+            <h3>Como funciona?</h3>
+            <ul>
+                <li>✅ Registre sua entrada ao chegar</li>
+                <li>✅ Registre sua saída ao sair</li>
+                <li>✅ O sistema calcula as horas automaticamente</li>
+                <li>✅ Visualize seu histórico mensal</li>
+                <li>✅ Acompanhe sua folha de pagamento</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
