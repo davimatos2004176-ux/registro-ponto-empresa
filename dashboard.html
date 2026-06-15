@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Ponto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>📊 Ponto</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="home">
+                    <span>🏠</span> Início
+                </a>
+                <a href="#" class="nav-item" data-section="registros">
+                    <span>📋</span> Meus Registros
+                </a>
+                <a href="#" class="nav-item" data-section="horas">
+                    <span>⏰</span> Horas Trabalhadas
+                </a>
+                <a href="#" class="nav-item" data-section="folha">
+                    <span>💰</span> Folha de Pagamento
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">🚪 Sair</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Bem-vindo!</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span id="userName">Usuário</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content">
+                <!-- Home Section -->
+                <section id="home" class="section active">
+                    <div class="welcome-card">
+                        <h2>Bem-vindo, <span id="welcomeName">Funcionário</span>!</h2>
+                        <p id="currentDateTime"></p>
+                    </div>
+
+                    <div class="ponto-actions">
+                        <div class="action-card">
+                            <h3>Registro de Ponto</h3>
+                            <div class="action-buttons">
+                                <button id="btnEntrada" class="btn btn-entrada">
+                                    ➡️ Registrar Entrada
+                                </button>
+                                <button id="btnSaida" class="btn btn-saida">
+                                    ⬅️ Registrar Saída
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="today-info">
+                        <div class="info-card">
+                            <h3>Hoje</h3>
+                            <div class="info-content">
+                                <div class="info-item">
+                                    <span class="label">Entrada:</span>
+                                    <span id="hojeEntrada" class="value">--:--</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Saída:</span>
+                                    <span id="hojeSaida" class="value">--:--</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Horas:</span>
+                                    <span id="hojeHoras" class="value">0h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>Este Mês</h3>
+                            <div class="info-content">
+                                <div class="info-item">
+                                    <span class="label">Total de Horas:</span>
+                                    <span id="mesHoras" class="value">0h</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Dias Trabalhados:</span>
+                                    <span id="mesDias" class="value">0</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Média Diária:</span>
+                                    <span id="mesMedia" class="value">0h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Registros Section -->
+                <section id="registros" class="section">
+                    <div class="section-header">
+                        <h2>Meus Registros</h2>
+                        <div class="filters">
+                            <label>Mês:</label>
+                            <select id="mesFilter">
+                                <option value="">Todos</option>
+                                <option value="01">Janeiro</option>
+                                <option value="02">Fevereiro</option>
+                                <option value="03">Março</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Maio</option>
+                                <option value="06">Junho</option>
+                                <option value="07">Julho</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="registros-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Horas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrosTableBody">
+                                <tr>
+                                    <td colspan="4" class="text-center">Carregando registros...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Horas Section -->
+                <section id="horas" class="section">
+                    <div class="section-header">
+                        <h2>Horas Trabalhadas</h2>
+                    </div>
+
+                    <div class="horas-summary">
+                        <div class="summary-card">
+                            <h3>Resumo Mensal</h3>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="label">Mês Atual:</span>
+                                    <span id="mesAtual" class="value">--/----</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total de Horas:</span>
+                                    <span id="totalHoras" class="value">0h</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Dias Úteis:</span>
+                                    <span id="diasUteis" class="value">0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Horas Esperadas:</span>
+                                    <span id="horasEsperadas" class="value">0h</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Diferença:</span>
+                                    <span id="diferenca" class="value">0h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Gráfico de Horas</h3>
+                        <canvas id="horasChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Folha de Pagamento Section -->
+                <section id="folha" class="section">
+                    <div class="section-header">
+                        <h2>Folha de Pagamento</h2>
+                    </div>
+
+                    <div class="folha-container">
+                        <div class="folha-card">
+                            <h3>Último Pagamento</h3>
+                            <div class="folha-content">
+                                <div class="folha-item">
+                                    <span class="label">Mês:</span>
+                                    <span id="folhaMes" class="value">--/----</span>
+                                </div>
+                                <div class="folha-item">
+                                    <span class="label">Salário Base:</span>
+                                    <span id="folhaSalarioBase" class="value">R$ 0,00</span>
+                                </div>
+                                <div class="folha-item">
+                                    <span class="label">Horas Extras:</span>
+                                    <span id="folhaHorasExtras" class="value">0h</span>
+                                </div>
+                                <div class="folha-item">
+                                    <span class="label">Valor Horas Extras:</span>
+                                    <span id="folhaValorExtras" class="value">R$ 0,00</span>
+                                </div>
+                                <div class="folha-item">
+                                    <span class="label">Descontos:</span>
+                                    <span id="folhaDescontos" class="value">R$ 0,00</span>
+                                </div>
+                                <div class="folha-item total">
+                                    <span class="label">Salário Líquido:</span>
+                                    <span id="folhaSalarioLiquido" class="value">R$ 0,00</span>
+                                </div>
+                                <div class="folha-item">
+                                    <span class="label">Data de Pagamento:</span>
+                                    <span id="folhaDataPagamento" class="value">--/--/----</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="btnDownloadFolha">
+                                📥 Baixar Folha
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="folhas-historico">
+                        <h3>Histórico de Folhas</h3>
+                        <div class="table-container">
+                            <table class="folhas-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mês</th>
+                                        <th>Salário Base</th>
+                                        <th>Extras</th>
+                                        <th>Descontos</th>
+                                        <th>Líquido</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="folhasTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Carregando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>✅ Sucesso!</h2>
+            <p id="successMessage">Operação realizada com sucesso.</p>
+            <button class="btn btn-primary" onclick="closeModal('successModal')">Ok</button>
+        </div>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <h2>❌ Erro!</h2>
+            <p id="errorMessage">Ocorreu um erro. Tente novamente.</p>
+            <button class="btn btn-primary" onclick="closeModal('errorModal')">Ok</button>
+        </div>
+    </div>
+
+    <script src="js/calculo.js"></script>
+    <script src="js/registro.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
